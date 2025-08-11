@@ -19,7 +19,7 @@ jobs:
 
       - name: Download and extract Apache JMeter
         run: |
-          wget https://downloads.apache.org//jmeter/binaries/$JMETER_TAR
+          wget https://downloads.apache.org/jmeter/binaries/$JMETER_TAR
           tar -xzf $JMETER_TAR
           rm $JMETER_TAR
 
