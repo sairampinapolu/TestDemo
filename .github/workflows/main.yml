@@ -20,7 +20,6 @@ jobs:
         with:
           test-plan-path: ./TC03_LOB_.jmx
           args: >
-            -n
             -t ./TC03_LOB_.jmx
             -l reports/result.jtl
             -e
