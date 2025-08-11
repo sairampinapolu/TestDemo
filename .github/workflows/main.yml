@@ -17,7 +17,7 @@ jobs:
 
       - name: Download and extract Apache JMeter
         run: |
-          wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.5.tgz
+          wget https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-5.5.tgz
           tar -xzf apache-jmeter-5.5.tgz
           rm apache-jmeter-5.5.tgz
 
