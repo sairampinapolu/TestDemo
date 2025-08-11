@@ -1,26 +1,37 @@
-name: JMeter Load Test
+name: JMeter Load Test - Latest Version
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
   workflow_dispatch:
 
 jobs:
   run-jmeter:
     runs-on: ubuntu-latest
+    env:
+      JMETER_VERSION: 5.5
+      JMETER_DIR: apache-jmeter-${{ env.JMETER_VERSION }}
+      JMETER_TAR: apache-jmeter-${{ env.JMETER_VERSION }}.tgz
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Download and extract Apache JMeter
+        run: |
+          wget https://downloads.apache.org//jmeter/binaries/${JMETER_TAR}
+          tar -xzf ${JMETER_TAR}
+          rm ${JMETER_TAR}
 
       - name: Create reports directory
         run: mkdir -p reports/html
 
       - name: Run JMeter Test
-        uses: QAInsights/PerfAction@v5.6.2
-        with:
-          test-plan-path: ./TC03_LOB_.jmx
+        run: |
+          ./${JMETER_DIR}/bin/jmeter -n -t ./TC03_LOB_.jmx \
+            -l reports/result.jtl \
+            -e -o reports/html \
+            -j jmeter.log
 
       - name: Debug - Show JMeter log
         run: cat jmeter.log || true
@@ -30,9 +41,6 @@ jobs:
 
       - name: Debug - Find all .jtl files under reports
         run: find reports -name '*.jtl' || true
-
-      - name: Debug - Show size of result.jtl if exists
-        run: ls -lh reports/result.jtl || echo "File reports/result.jtl not found"
 
       - name: Upload Results (all .jtl files under reports)
         uses: actions/upload-artifact@v4
