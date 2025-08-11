@@ -9,7 +9,6 @@ jobs:
   run-jmeter:
     runs-on: ubuntu-latest
     env:
-      JMETER_VERSION: 5.5
       JMETER_DIR: apache-jmeter-5.5
 
     steps:
@@ -18,9 +17,9 @@ jobs:
 
       - name: Download and extract Apache JMeter
         run: |
-          wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-${{ env.JMETER_VERSION }}.tgz
-          tar -xzf apache-jmeter-${{ env.JMETER_VERSION }}.tgz
-          rm apache-jmeter-${{ env.JMETER_VERSION }}.tgz
+          wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-5.5.tgz
+          tar -xzf apache-jmeter-5.5.tgz
+          rm apache-jmeter-5.5.tgz
 
       - name: Create reports directory
         run: mkdir -p reports/html
