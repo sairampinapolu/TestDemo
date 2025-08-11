@@ -19,13 +19,17 @@ jobs:
         uses: QAInsights/PerfAction@v5.6.2
         with:
           test-plan-path: ./TC03_LOB_.jmx
-          args: "-l ./reports/result.jtl -e -o ./reports/html/ -j jmeter.log"
+          args: >
+            -n
+            -t ./TC03_LOB_.jmx
+            -l reports/result.jtl
+            -e
+            -o reports/html
+            -j jmeter.log
 
-      # Debug step to view JMeter log output
       - name: Debug - Show JMeter log
         run: cat jmeter.log || true
 
-      # Debug step to view files in reports folder
       - name: Debug - Show reports directory
         run: ls -R reports || true
 
@@ -40,5 +44,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-html-reports
-          path: reports
+          path: reports/html
           if-no-files-found: error
