@@ -30,15 +30,22 @@ jobs:
       - name: Debug - Show JMeter log
         run: cat jmeter.log || true
 
-      - name: Debug - Show reports directory
-        run: ls -R reports || true
+      - name: Debug - Show reports directory recursively
+        run: ls -lR reports || true
 
-      - name: Upload Results
+      - name: Debug - Find all .jtl files under reports
+        run: find reports -name '*.jtl' || true
+
+      - name: Debug - Show size of result.jtl if exists
+        run: ls -lh reports/result.jtl || echo "File reports/result.jtl not found"
+
+      - name: Upload Results (all .jtl files under reports)
         uses: actions/upload-artifact@v4
         with:
           name: jmeter-results
-          path: reports/result.jtl
+          path: reports/*.jtl
           if-no-files-found: error
+          compression-level: 6
 
       - name: Upload HTML Reports
         uses: actions/upload-artifact@v4
