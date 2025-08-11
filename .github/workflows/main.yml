@@ -10,8 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       JMETER_VERSION: 5.5
-      JMETER_DIR: apache-jmeter-$JMETER_VERSION
-      JMETER_TAR: apache-jmeter-$JMETER_VERSION.tgz
+      JMETER_DIR: apache-jmeter-5.5
 
     steps:
       - name: Checkout repository
@@ -19,16 +18,16 @@ jobs:
 
       - name: Download and extract Apache JMeter
         run: |
-          wget https://downloads.apache.org/jmeter/binaries/$JMETER_TAR
-          tar -xzf $JMETER_TAR
-          rm $JMETER_TAR
+          wget https://downloads.apache.org/jmeter/binaries/apache-jmeter-${{ env.JMETER_VERSION }}.tgz
+          tar -xzf apache-jmeter-${{ env.JMETER_VERSION }}.tgz
+          rm apache-jmeter-${{ env.JMETER_VERSION }}.tgz
 
       - name: Create reports directory
         run: mkdir -p reports/html
 
       - name: Run JMeter Test
         run: |
-          ./$JMETER_DIR/bin/jmeter -n -t ./TC03_LOB_.jmx \
+          ./${{ env.JMETER_DIR }}/bin/jmeter -n -t ./TC03_LOB_.jmx \
             -l reports/result.jtl \
             -e -o reports/html \
             -j jmeter.log
