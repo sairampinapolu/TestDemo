@@ -19,12 +19,6 @@ jobs:
         uses: QAInsights/PerfAction@v5.6.2
         with:
           test-plan-path: ./TC03_LOB_.jmx
-          args: >
-            -t ./TC03_LOB_.jmx
-            -l reports/result.jtl
-            -e
-            -o reports/html
-            -j jmeter.log
 
       - name: Debug - Show JMeter log
         run: cat jmeter.log || true
